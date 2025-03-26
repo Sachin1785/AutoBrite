@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AutoBrite Settings</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 16px;
+      margin: 0;
+      background-color: #18181b; /* zinc-900 */
+      color: #fafafa; /* zinc-50 */
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    .container {
+      background-color: #27272a; /* zinc-800 */
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      color: #d4d4d8; /* zinc-300 */
+      font-weight: 600;
+    }
+
+    .control {
+      background-color: #3f3f46; /* zinc-700 */
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      color: #a1a1aa; /* zinc-400 */
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-value {
+      color: #e4e4e7; /* zinc-200 */
+      font-weight: 500;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: #52525b;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #a1a1aa; /* zinc-400 */
+      cursor: pointer;
+      transition: background 0.15s ease-in-out;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      background: #d4d4d8; /* zinc-300 */
+    }
+
+    .default-settings {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #3f3f46;
+    }
+
+    .default-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    input[type="number"] {
+      background: #3f3f46;
+      border: 1px solid #52525b;
+      border-radius: 4px;
+      color: #e4e4e7;
+      padding: 6px;
+      font-size: 14px;
+      appearance: textfield;
+      -moz-appearance: textfield; /* Firefox */
+    }
+
+    /* Hide arrows in number input fields for Chrome, Safari, Edge, and Opera */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Hide arrows in number input fields for Firefox */
+    input[type="number"] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    button {
+      width: 100%;
+      background: #3f3f46;
+      border: none;
+      border-radius: 4px;
+      color: #e4e4e7;
+      padding: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease-in-out;
+    }
+
+    button:hover {
+      background: #52525b;
+    }
+
+    .toggle-container {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #52525b;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #e4e4e7;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #22c55e;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    .header-controls {
+      margin-bottom: 16px;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #3f3f46;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .default-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .default-header h1 {
+      margin: 0;
+    }
+
+    .default-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      background-color: #3f3f46;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .toggle-container span {
+      flex: 1;
+      font-size: 14px;
+      color: #a1a1aa;
+    }
+
+    .compact-button {
+      width: auto;
+      padding: 4px 12px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .reset-icon {
+      cursor: pointer;
+      color: #a1a1aa;
+      transition: color 0.15s ease-in-out;
+    }
+
+    .reset-icon:hover {
+      color: #e4e4e7;
+    }
+
+    .header-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toggle-container, .reset-container {
+      background-color: #3f3f46;
+      padding: 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toggle-container {
+      flex: 2;
+    }
+
+    .reset-container {
+      flex: 1;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out;
+    }
+
+    .reset-container:hover {
+      background-color: #52525b;
+    }
+
+    .reset-container span {
+      font-size: 14px;
+      color: #a1a1aa;
+    }
+  </style>
+  <script src="popup.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header-row">
+      <div class="toggle-container">
+        <span>Auto Adjust</span>
+        <label class="toggle">
+          <input type="checkbox" id="autoToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div id="resetToDefault" class="reset-container">
+        <span>Reset</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reset-icon"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+      </div>
+    </div>
+
+    <h1>Display Settings</h1>
+    <div class="control">
+      <div class="control-label">
+        <span>Brightness</span>
+        <span class="control-value" id="currentBrightness">Loading...</span>
+      </div>
+      <input type="range" min="0" max="100" class="slider" id="brightnessSlider">
+    </div>
+    <div class="control">
+      <div class="control-label">
+        <span>Contrast</span>
+        <span class="control-value" id="currentContrast">Loading...</span>
+      </div>
+      <input type="range" min="0" max="100" class="slider" id="contrastSlider">
+    </div>
+    
+    <div class="default-settings">
+      <h1>Default Settings</h1>
+      <div class="default-inputs">
+        <div class="input-group">
+          <label class="stat-label">Brightness</label>
+          <input type="number" id="defaultBrightness" min="0" max="100">
+        </div>
+        <div class="input-group">
+          <label class="stat-label">Contrast</label>
+          <input type="number" id="defaultContrast" min="0" max="100">
+        </div>
+      </div>
+      <button id="saveDefaults">Save as Default</button>
+    </div>
+  </div>
+</body>
+</html>
